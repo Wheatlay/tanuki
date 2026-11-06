@@ -38,8 +38,16 @@ try {
     }
 
     New-Item -ItemType Directory -Force $base | Out-Null
-    Start-Process -FilePath $exe -ArgumentList 'proxy' -WorkingDirectory $userHome -WindowStyle Hidden `
-        -RedirectStandardOutput (Join-Path $base 'tanuki.log') -RedirectStandardError (Join-Path $base 'tanuki.err.log')
+    # Start-Process z -Redirect* dziedziczy uchwyty: proxy trzymaloby potok stdout wywolujacego
+    # (Stateful Buttons) i przycisk krecilby sie, dopoki Tanuki dziala. ShellExecute nie dziedziczy
+    # uchwytow (a zmienne srodowiskowe tak), przekierowanie robi cmd.
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = 'cmd.exe'
+    $psi.Arguments = '/c ""' + $exePath + '" proxy >"' + (Join-Path $base 'tanuki.log') + '" 2>"' + (Join-Path $base 'tanuki.err.log') + '""'
+    $psi.WorkingDirectory = $userHome
+    $psi.UseShellExecute = $true
+    $psi.WindowStyle = 'Hidden'
+    [System.Diagnostics.Process]::Start($psi) | Out-Null
 
     $settings = Join-Path $userHome '.claude/settings.json'
     for ($i = 0; $i -lt 20; $i++) {
