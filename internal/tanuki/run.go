@@ -163,9 +163,20 @@ func envOr(key, fallback string) string {
 	return fallback
 }
 
-func dataDir() string   { return envOr("TANUKI_DATA", "data") }
-func proxyPort() string { return envOr("TANUKI_PROXY_PORT", "18080") }
-func portStart() string { return envOr("TANUKI_PORT_START", "9000") }
+// dataDir is TANUKI_DATA, else %LOCALAPPDATA%/tanuki/data on Windows (hooks run
+// from Claude Code without TANUKI_DATA in their environment), else ./data.
+func dataDir() string {
+	if v := os.Getenv("TANUKI_DATA"); v != "" {
+		return v
+	}
+	if la := os.Getenv("LOCALAPPDATA"); la != "" {
+		return filepath.Join(la, "tanuki", "data")
+	}
+	return "data"
+}
+func proxyPort() string  { return envOr("TANUKI_PROXY_PORT", "18080") }
+func listenHost() string { return envOr("TANUKI_LISTEN_HOST", "0.0.0.0") }
+func portStart() string  { return envOr("TANUKI_PORT_START", "9000") }
 
 // currentEngagement reads the active engagement, or "" if there is none. It
 // validates the (user-writable) name and never fatals.

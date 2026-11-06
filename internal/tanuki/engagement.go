@@ -537,7 +537,7 @@ func configureHooks() error {
 		return err
 	}
 
-	hookCmd := "docker exec -i tanuki /tanuki hook"
+	hookCmd := envOr("TANUKI_HOOK_CMD", "docker exec -i tanuki /tanuki hook")
 
 	mkEntry := func(matcher, subcommand string) map[string]any {
 		entry := map[string]any{

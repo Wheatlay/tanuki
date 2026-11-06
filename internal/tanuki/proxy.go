@@ -63,7 +63,7 @@ func runProxy() {
 	// past the cleanup at the end, so the only safe order is to fail first.
 	var lc net.ListenConfig
 
-	listener, err := lc.Listen(context.Background(), "tcp", "0.0.0.0:"+port)
+	listener, err := lc.Listen(context.Background(), "tcp", listenHost()+":"+port)
 	if err != nil {
 		fatal("proxy listen failed: " + err.Error())
 	}
@@ -86,11 +86,11 @@ func runProxy() {
 
 	logger.Info("proxy listening",
 		"upstream", upstream,
-		"addr", "0.0.0.0:"+port,
+		"addr", listenHost()+":"+port,
 	)
 
 	server := &http.Server{
-		Addr:              "0.0.0.0:" + port,
+		Addr:              listenHost() + ":" + port,
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       60 * time.Second,
 		// No write deadline: a long streaming /v1/messages response can run
