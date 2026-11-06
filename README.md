@@ -23,6 +23,8 @@
 
 ---
 
+> **Fork of [Pigyon/tanuki](https://github.com/Pigyon/tanuki).** This fork adds a native Windows setup without Docker: the listen host, hook command and data directory are configurable (`TANUKI_LISTEN_HOST`, `TANUKI_HOOK_CMD`, `%LOCALAPPDATA%\tanuki\data` fallback), and `toggle-tanuki.ps1` starts and stops the proxy. See [NATIVE-WINDOWS.md](NATIVE-WINDOWS.md). Everything else is upstream; report upstream issues there.
+
 Tanuki sits between your local **Claude Code** agent and the **Anthropic API**, rewriting every target-identifying string in real time. Your tools hit the real target; the model only ever sees a fictional localhost project.
 
 ## Table of Contents
