@@ -15,4 +15,4 @@ Lokalne zmiany w kodzie (niezacommitowane):
 - `~/.claude/settings.json` (`ANTHROPIC_BASE_URL`, hook `pre-tool-use`) i `~/.claude/CLAUDE.md` (blok `TANUKI`): wpisywane przy starcie, czyszczone przy wyłączeniu (`tanuki.exe reset`).
 - Stary wolumen docker `tanuki-data` i obraz `ghcr.io/pigyon/tanuki`: zostały, nieużywane.
 
-Gdy Claude Code nie łączy się (ECONNREFUSED) przy wyłączonym Tanuki: w `C:\Users\krzys` uruchom `Desktop/5-Sklonowane/tanuki/bin/tanuki.exe reset`.
+Gdy Claude Code nie łączy się (ECONNREFUSED) przy wyłączonym Tanuki: w `C:\Users\krzys` uruchom `Desktop/2-Wydane/tanuki/bin/tanuki.exe reset`.
